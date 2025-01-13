@@ -55,7 +55,7 @@ class _CalculatorState extends State<Calculator> {
                   child: Text(
                     userQuestion1,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 30,
                     ),
                   ),
                 ),
