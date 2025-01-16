@@ -10,6 +10,7 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State<Todo> {
+  final _controller = TextEditingController();
   List toDo = [
     ["make tut", false],
     ["tut", false],
@@ -21,13 +22,33 @@ class _TodoState extends State<Todo> {
     });
   }
 
+  // save new task
+  void saveTheTask() {
+    setState(() {
+      toDo.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
   void createNewTask() {
     showDialog(
       context: context,
       builder: (context) {
-        return DialogBox ();
+        return DialogBox(
+          myController: _controller,
+          onSave: saveTheTask,
+          onCancel: Navigator.of(context).pop,
+        );
       },
     );
+  }
+
+  //! Delete Button
+  void deleteTask(int index) {
+    setState(() {
+      toDo.removeAt(index);
+    });
   }
 
   @override
@@ -52,9 +73,11 @@ class _TodoState extends State<Todo> {
         itemCount: toDo.length,
         itemBuilder: (context, index) {
           return ToDoList(
-              taskName: toDo[index][0],
-              taskCompleted: toDo[index][1],
-              onChanged: (value) => checkBoxChanged(value, index));
+            taskName: toDo[index][0],
+            taskCompleted: toDo[index][1],
+            onChanged: (value) => checkBoxChanged(value, index),
+            deleteTodo: (context) => deleteTask(index),
+          );
         },
       ),
     );
