@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/src/Todo.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
-void main() {
+void main() async {
+  //Initialize the hive
+  await Hive.initFlutter();
+
+  //Open a box
+  var box = await Hive.openBox("myBox");
   runApp(const MyApp());
 }
 
